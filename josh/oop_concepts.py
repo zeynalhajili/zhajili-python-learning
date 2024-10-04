@@ -51,3 +51,32 @@
 
 # player1.show_stats()
 # player2.show_stats()
+
+
+class Rectangle():
+    def __init__(self,width,length):
+        self.width =width
+        self.length =length
+    
+    def information(self):
+        print(f"This is rectangle and it's length is {self.length} and it's width is {self.width}")
+    
+    def calculate_perimeter(self):
+        self.perimeter = 2*(self.width + self.length)
+        return self.perimeter
+
+    def calculate_area(self):
+        self.area = self.width * self.length
+        return self.area
+    
+    def updated_length(self,length):
+        self.updated = (self.length -length) * self.width
+        return self.updated
+
+a = int(input("Please enter length:\n"))
+b = int(input("Please enter width:\n"))
+
+rect1 = Rectangle(a,b)
+rect1.information()
+print("Perimeter is: ",rect1.calculate_perimeter())
+print("Area is: ",rect1.calculate_area())
