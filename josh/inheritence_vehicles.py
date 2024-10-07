@@ -6,7 +6,8 @@ class Vehicles(): # parent class
         self.price = price
         
     def check_origin(self):
-        if self.make.lower() in ["ford", "tesla", "chevy"]:
+        if self.make.lower() in ["ford", "tesla", "chevy"]: #fixed by chatgpt
+        # if self.make.lower() == "ford" or self.make.lower() == "tesla" or self.make.lower() == "chevy" #my solution
             return "American Made"
         else:
             return "Imported"
