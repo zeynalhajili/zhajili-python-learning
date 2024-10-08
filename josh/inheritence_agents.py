@@ -43,20 +43,23 @@ class Spy(Agents): # child class, which inherits from Agents Super Class.
             if enemy.health <= 0:  # Check if the enemy's health has dropped to 0 or below
                 enemy.killed = True  # Mark the enemy as killed
                 print(f"{enemy.name} is dead!")  # Print death message
+                
+    def is_alive(self): # check if agent is live or dead
+        return not self.killed
             
-james_bond = Spy("James Bond", 81, "Toyota","LR","Istanbul")
-ethan_hunt = Spy("Ethan Hunt", 92,"BMW","VR","London")
+james_bond = Spy("James Bond", 81, "Toyota","LR","Istanbul") # create james object
+ethan_hunt = Spy("Ethan Hunt", 92,"BMW","VR","London") # create ethan object
 
-# james_bond.agent_info()
-# ethan_hunt.agent_info()
-
-james_bond.attack(ethan_hunt)
-while james_bond.health > 0 and ethan_hunt.health > 0:
+while james_bond.is_alive() and ethan_hunt.is_alive():
     james_bond.attack(ethan_hunt)
-    sleep(3)
+    sleep(2)
+    
+    if not james_bond.is_alive():
+        break   
     ethan_hunt.attack(james_bond)
     sleep(3)
- 
+    
+    
 print("Gamer Over!")
     
 
