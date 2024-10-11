@@ -68,31 +68,49 @@ class Customer():
         
         self.accounts.append(account)
         return self.accounts
-    
-    def view_accounts(self):
-        return self.accounts
-       
+         
     def deposit(self,account_number,amount):
         if amount <= 0:
             print("Deposit amount must be positive.")
             return # I will stop here even amount is negative is 0, could be checked furhther with adding loop.
-        for account in self.accounts:
+        for account in self.accounts: # checking each account in list
             if account_number == account['account_number']:
                 print("Account exists, balance will be updated!")
                 account["balance"] = account["balance"] + amount
-                return
+                print(f"{account_number}'s balance has been increased by {amount}$. New balance is {account['balance']}$")
+                return self.accounts
 
         print("Account is new, creating account and updating balance!")
         new_account = {
         "account_number": account_number,
         "balance": amount  
                         }
-        self.accounts.append(new_account)       
+        self.accounts.append(new_account)
+        print(f"{account_number}'s balance has been increased by {amount}$")
+     
         return self.accounts 
     
-    # def withdraw(self,account_number, amount):
+    def view_accounts(self):
+        return self.accounts
+    
+    def withdraw(self,account_number, amount):
+        if amount <= 0:
+            print("Invalid withdraw money")
+            return # I will stop here even amount is negative is 0, could be checked furhther with adding loop.
+        for account in self.accounts: # checking each account in list
+            if account_number == account['account_number']:
+                if account["balance"] - amount >= 0:
+                    account["balance"] = account["balance"] - amount
+                    print(f"{account_number}'s balance has been decreased by {amount}$. New balance is {account['balance']}$")
+                    return self.accounts
+                else:
+                    print("You dont have enough balance!")
+                    return
+        # If no matching account was found
+        print(f"Account number {account_number} not found.")
                            
-            
+# withdraw(account_number, amount): Method to withdraw money from a specified account. Ensure sufficient balance, then decrease the balance and record the transaction.
+
 
 customer1 = Customer("Zeynal", 33)
 customer2 = Customer("Faraj", 8)
@@ -102,6 +120,5 @@ customer1.add_account(2011)
 customer2.add_account(2042)
 customer3.add_account(2023)
 customer2.add_account(2004)
-
-customer2.deposit(2004,1119)
-print(customer2.view_accounts())
+customer2.deposit(2084,219)
+customer2.withdraw(2094,2)
