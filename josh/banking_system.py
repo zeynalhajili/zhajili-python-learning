@@ -51,6 +51,7 @@
     # Allow customers to have multiple accounts with different balances.
     # Optionally, implement a feature to save and load customer data from a file (for future practice with file I/O).
     
+import time
 
 class Customer():
     def __init__(self,name,age):
@@ -78,16 +79,28 @@ class Customer():
                 print("Account exists, balance will be updated!")
                 account["balance"] = account["balance"] + amount
                 print(f"{account_number}'s balance has been increased by {amount}$. New balance is {account['balance']}$")
+                
+                # add transcation history 
+                transaction = {
+                "account_number": account_number,
+                "type": "deposit",
+                "amount": amount,
+                "date": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "balance_after": account["balance"], 
+                "Message": "Your balance topped up"} 
+                
+                self.transaction_history.append(transaction)
                 return self.accounts
 
         print("Account is new, creating account and updating balance!")
+        
         new_account = {
         "account_number": account_number,
         "balance": amount  
                         }
         self.accounts.append(new_account)
+        
         print(f"{account_number}'s balance has been increased by {amount}$")
-     
         return self.accounts 
     
     def view_accounts(self):
@@ -101,16 +114,48 @@ class Customer():
             if account_number == account['account_number']:
                 if account["balance"] - amount >= 0:
                     account["balance"] = account["balance"] - amount
+                    
+                    # Log the transaction
+                    transaction = {
+                        "account_number": account_number,
+                        "type": "withdraw",
+                        "amount": amount,
+                        "date": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "balance_after": account["balance"], 
+                        "Message": "Withdrawal successful"
+                    }
+                    
+                    self.transaction_history.append(transaction)
+                    
                     print(f"{account_number}'s balance has been decreased by {amount}$. New balance is {account['balance']}$")
                     return self.accounts
                 else:
                     print("You dont have enough balance!")
-                    return
+                    transaction = {
+                    "account_number": account_number,
+                    "type": "withdraw",
+                    "amount": amount,
+                    "date": time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "balance_after": account["balance"],
+                    "Message": "Withdrawal failed due to insufficient balance"
+                                  }
+                    
+                    self.transaction_history.append(transaction)
+                    return None
+                    # add transcation history 
         # If no matching account was found
-        print(f"Account number {account_number} not found.")
-                           
-# withdraw(account_number, amount): Method to withdraw money from a specified account. Ensure sufficient balance, then decrease the balance and record the transaction.
-
+        # Log failed transaction due to account not found
+        transaction = {
+            "account_number": account_number,
+            "type": "withdraw",
+            "amount": amount,
+            "date": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "balance_after": None,
+            "Message": "Withdrawal failed, account not found"
+        }
+        self.transaction_history.append(transaction)
+        print(f"Account number {account_number} was not found.")
+        return None
 
 customer1 = Customer("Zeynal", 33)
 customer2 = Customer("Faraj", 8)
