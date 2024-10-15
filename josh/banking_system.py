@@ -6,7 +6,7 @@
         # age: The age of the customer (integer).
         # accounts: A list to hold multiple accounts (initially an empty list).
         # transaction_history: A list to store transaction records (initially an empty list).
-# Methods: (in progress)
+# Methods: (done)
         # add_account(account_number): Method to add a new account (account number) to the customer's account list.
         # view_accounts(): Method to display all accounts associated with the customer.
         # deposit(account_number, amount): Method to deposit money into a specified account. If the account exists, increase the balance and record the transaction.
@@ -131,6 +131,7 @@ class Customer():
                     return self.accounts
                 else:
                     print("You dont have enough balance!")
+                    # add transcation history  for insufficient balance
                     transaction = {
                     "account_number": account_number,
                     "type": "withdraw",
@@ -139,7 +140,6 @@ class Customer():
                     "balance_after": account["balance"],
                     "Message": "Withdrawal failed due to insufficient balance"
                                   }
-                    
                     self.transaction_history.append(transaction)
                     return None
                     # add transcation history 
@@ -157,13 +157,119 @@ class Customer():
         print(f"Account number {account_number} was not found.")
         return None
 
-customer1 = Customer("Zeynal", 33)
-customer2 = Customer("Faraj", 8)
-customer3 = Customer("Ronaldo", 39)
+class Bank():
+    def __init__(self):
+        self.customers = []
+        
+    def add_customer(self,customer): 
+        if isinstance(customer,Customer):
+            self.customers.append(customer)
+            print("Customer has been added to bank database successfully")
+        else:
+            print("This is not correct customer object!")
+        return self.customers
+    
+    def show_customers(self):
+        for customer in self.customers:
+            print(f"{customer.name}")
+        return self.customers
+   
+    def find_customer(self,name):
+        for customer in self.customers:
+            if customer.name == name:
+                print(f"Customer {name} found!")
+                return customer
+        print(f"Customer {name} not found!")
+        return None
+    
+    def transfer_funds(self, account_from, account_to, amount):
+        source_account = None
+        destination_account = None
 
-customer1.add_account(2011)
-customer2.add_account(2042)
-customer3.add_account(2023)
-customer2.add_account(2004)
-customer2.deposit(2084,219)
-customer2.withdraw(2094,2)
+        # Find the source account
+        for customer in self.customers:
+            for account in customer.accounts:
+                if account['account_number'] == account_from:
+                    source_account = account  # Reference the source account
+                    print(source_account)
+                    break  # Stop searching once found
+
+        if source_account is None:
+            print("Source Account Not Found")
+            return  # Exit the method if not found
+
+        # Find the destination account
+        for customer in self.customers:
+            for account in customer.accounts:
+                if account['account_number'] == account_to:
+                    destination_account = account  # Reference the destination account
+                    break  # Stop searching once found
+
+        if destination_account is None:
+            print("Destination Account Not Found")
+            return  # Exit the method if not found
+
+        # Check for sufficient balance
+        if source_account['balance'] >= amount:
+            source_account['balance'] -= amount  # Deduct from source account
+            destination_account['balance'] += amount  # Add to destination account
+            print(f"Transfer successful! New balance for {account_from}: {source_account['balance']}, {account_to}: {destination_account['balance']}")
+        else:
+            print("Insufficient funds in source account")
+            
+    def view_all_accounts(self):
+        for account in self.customers:
+            print(f"Customer: {account.name}")
+            for i in account.accounts:
+                print(f"Account Number: {i['account_number']}, Balance: ${i['balance']}")
+                
+# Create a Bank object
+bank = Bank()
+
+# Create Customer objects
+customer_1 = Customer("Zeynal", 33)
+customer_2 = Customer("Faraj", 8)   
+
+# Add Customers to the Bank
+bank.add_customer(customer_1)
+bank.add_customer(customer_2)    
+
+# Add accounts to customers
+customer_1.add_account(account_number="1001", balance=500)
+customer_1.add_account(account_number="2001", balance=1500)
+customer_1.add_account(account_number="3001", balance=2500)
+
+customer_2.add_account(account_number="1002", balance=2300)
+customer_2.add_account(account_number="2002", balance=1300)
+customer_2.add_account(account_number="3002", balance=3300)
+
+# Now, let's test the transfer_funds method
+# Trying to transfer 100 from Alice's account (1001) to Bob's account (1002)
+# bank.transfer_funds(account_from="3002", account_to="1001", amount=610)
+
+# bank.show_customers()
+
+# Customer: Alice
+#     Account Number: 12345678, Balance: $1500
+#     Account Number: 87654321, Balance: $5000
+
+# Customer: Bob
+#     Account Number: 98765432, Balance: $2500
+
+# Customer: Carol
+#     Account Number: 12312312, Balance: $3000
+
+bank.view_all_accounts()    
+        
+        
+        
+
+
+
+
+
+
+
+
+
+
