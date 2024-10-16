@@ -22,6 +22,14 @@
         # transfer_funds(account_from, account_to, amount): Method to transfer funds between two accounts. Ensure sufficient balance and update both accounts accordingly.
         # view_all_accounts(): Method to view all accounts and their balances within the bank.
         
+# Additional Methods for Practice:
+        # Remove Customer: A method to remove a customer by their name from the bank's customer list.
+        # Check Account Balance: A method to check the balance of a specific account by its account number.
+        # Customer Transaction History: A method to show the transaction history for a specific customer (by name).
+        # Update Customer Information: A method to update a customer’s name or age.
+        # Close Account: A method to close a specific account (by account number) for a customer.
+        # Change Account Balance Directly: Implement a method to adjust an account balance directly (for testing purposes).
+        
 # User Interaction:
 # Implement a menu-driven interface that allows users to:
     # Add a new customer.
@@ -223,44 +231,53 @@ class Bank():
             for i in account.accounts:
                 print(f"Account Number: {i['account_number']}, Balance: ${i['balance']}")
                 
-# Create a Bank object
-bank = Bank()
-
-# Create Customer objects
-customer_1 = Customer("Zeynal", 33)
-customer_2 = Customer("Faraj", 8)   
-
-# Add Customers to the Bank
-bank.add_customer(customer_1)
-bank.add_customer(customer_2)    
-
-# Add accounts to customers
-customer_1.add_account(account_number="1001", balance=500)
-customer_1.add_account(account_number="2001", balance=1500)
-customer_1.add_account(account_number="3001", balance=2500)
-
-customer_2.add_account(account_number="1002", balance=2300)
-customer_2.add_account(account_number="2002", balance=1300)
-customer_2.add_account(account_number="3002", balance=3300)
-
-# Now, let's test the transfer_funds method
-# Trying to transfer 100 from Alice's account (1001) to Bob's account (1002)
-# bank.transfer_funds(account_from="3002", account_to="1001", amount=610)
-
-# bank.show_customers()
-
-# Customer: Alice
-#     Account Number: 12345678, Balance: $1500
-#     Account Number: 87654321, Balance: $5000
-
-# Customer: Bob
-#     Account Number: 98765432, Balance: $2500
-
-# Customer: Carol
-#     Account Number: 12312312, Balance: $3000
-
-bank.view_all_accounts()    
+    def remove_customer(self,customer_name):
+        account_found = False
         
+        for customer in self.customers: # get object from list
+            if customer.name == customer_name: # get object name and compare
+                account_found = True
+                self.customers.remove(customer)  
+        if account_found:
+            print("This customer does not exist")        
+        return self.customers
+                
+                 
+                               
+# Create some Customer objects
+customer1 = Customer("Alice", 30)
+customer2 = Customer("Bob", 25)
+customer3 = Customer("Charlie", 40)
+
+# Add some accounts for the customers
+customer1.add_account("ACC001", 1000)
+customer1.add_account("ACC002", 1500)
+
+customer2.add_account("ACC003", 500)
+customer2.add_account("ACC004", 750)
+
+customer3.add_account("ACC005", 2000)
+
+# Create a Bank object and add the customers
+my_bank = Bank()
+my_bank.add_customer(customer1)
+my_bank.add_customer(customer2)
+my_bank.add_customer(customer3)
+
+# Display all customers (to check if added correctly)
+print("All customers before removing:")
+# my_bank.show_customers()
+
+# Test removing a customer
+print("\nRemoving Bob from the bank:")
+print(my_bank.remove_customer("James"))
+
+# Display all customers (after removal)
+my_bank.show_customers()
+
+
+
+
         
         
 
