@@ -237,48 +237,111 @@ class Bank():
         for customer in self.customers: # get object from list
             if customer.name == customer_name: # get object name and compare
                 account_found = True
-                self.customers.remove(customer)  
-        if account_found:
-            print("This customer does not exist")        
-        return self.customers
                 
-                 
-                               
-# Create some Customer objects
-customer1 = Customer("Alice", 30)
-customer2 = Customer("Bob", 25)
-customer3 = Customer("Charlie", 40)
+                self.customers.remove(customer)  
+        if not account_found:
+            print(f"Customer {customer_name} does not exist")        
+        return self.customers
 
-# Add some accounts for the customers
-customer1.add_account("ACC001", 1000)
-customer1.add_account("ACC002", 1500)
+    def check_account_balance(self,account_number):
+        search_account = False
+        
+        for customer in self.customers:
+            for single_account in customer.accounts:
+                if account_number == single_account['account_number']:
+                    search_account = True
+                    print(f"Account {account_number} has {single_account['balance']} $$") 
+                    return single_account['balance']         
+        if not search_account:
+            print("Account number not found!")
+            return None
+        
+    def customer_transaction_history(self, customer_name):
+        for single_customer in self.customers:
+            if single_customer.name == customer_name:
+                print(f"Transaction history for {single_customer.name}:")
+                if not single_customer.transaction_history:
+                    print("No transaction is available for this account ")
+                else:
+                    print(f"Account {single_customer.name} has following transaction history {single_customer.transaction_history}")
+                return
+        print("This customer does not exist")
 
-customer2.add_account("ACC003", 500)
-customer2.add_account("ACC004", 750)
-
-customer3.add_account("ACC005", 2000)
-
-# Create a Bank object and add the customers
+    def update_customer_information(self,customer_old_name, customer_new_name,age):
+        if age < 18:
+            print("Customer should be 18 years old!")
+            return
+        for customer_account in self.customers:
+            if customer_account.name == customer_old_name:
+                customer_account.name = customer_new_name
+                customer_account.age = age
+                print(f"{customer_old_name} name has been changed to {customer_new_name}")
+                print(f"New age has been set to {age} years old!")
+                return
+        print("This customer does not exist")
+                
+    def close_account(self, account_number):
+        for customer in self.customers:
+            for index, account in enumerate(customer.accounts):  # Use enumerate to track index
+                if account_number == account['account_number']:
+                    customer.accounts.pop(index)  # Use the index to pop
+                    print(f"Account {account_number} has been closed.")
+                    return customer.accounts  # Return the updated accounts list
+        print(f"Account {account_number} not found.")  # Notify if account doesn't exist
+                        
+       
+# Step 1: Create Bank object
 my_bank = Bank()
+
+# Step 2: Create Customer objects
+customer1 = Customer(name="Alice", age=30)
+customer2 = Customer(name="Bob", age=45)
+customer3 = Customer(name="Charlie", age=25)
+
+# Step 3: Add customers to the bank
 my_bank.add_customer(customer1)
 my_bank.add_customer(customer2)
 my_bank.add_customer(customer3)
 
-# Display all customers (to check if added correctly)
-print("All customers before removing:")
+# Step 4: Add accounts to the customers
+customer1.add_account(account_number="A001", balance=1000)  # Alice's account
+customer2.add_account(account_number="B001", balance=500)   # Bob's account
+customer3.add_account(account_number="C001", balance=200)   # Charlie's account
+customer3.add_account(account_number="C002", balance=200) # Charlie's account
+
+# Step 5: Deposit funds into accounts
+customer1.deposit("A001", 200)  # Valid deposit for Alice
+customer2.deposit("B001", -50)  # Invalid deposit for Bob (negative amount)
+customer3.deposit("C001", 100)  # Valid deposit for Charlie
+
+# Step 6: Withdraw funds from accounts
+customer1.withdraw("A001", 500)  # Valid withdrawal for Alice
+customer2.withdraw("B001", 1000) # Invalid withdrawal for Bob (insufficient funds)
+customer3.withdraw("C001", 50)   # Valid withdrawal for Charlie
+
+# Step 7: Transfer funds between accounts (within the same customer)
+# This step should happen between accounts that belong to the same customer.
+# Since customer1 only has one account, you can skip testing this feature for now.
+
+# Step 8: View all accounts in the bank
+# my_bank.view_all_accounts()
+
+# Step 9: Remove a customer
+# my_bank.remove_customer("XX")   # Remove Bob from the bank
+# my_bank.remove_customer("Dave")  # Attempt to remove a non-existing customer (Dave)
+
+# Step 10: View remaining customers
 # my_bank.show_customers()
 
-# Test removing a customer
-print("\nRemoving Bob from the bank:")
-print(my_bank.remove_customer("James"))
+# my_bank.check_account_balance('S001')
 
-# Display all customers (after removal)
-my_bank.show_customers()
+# my_bank.check_account_balance("A001")  # Should display the balance for Alice's account
+# my_bank.check_account_balance("B001")  # Should display the balance for Bob's account
+# my_bank.check_account_balance("Z999")  # Should print "Account number not found!"
 
-
-
-
-        
+# my_bank.customer_transaction_history("X")
+# my_bank.update_customer_information("Bob","Zeynal",19)
+my_bank.close_account("C002")
         
 
 
