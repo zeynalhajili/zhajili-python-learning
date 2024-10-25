@@ -336,6 +336,14 @@ def bank_menu():
                 dest_account_number = input("Please enter destination account for transfer:\n")
                 amount = int(input("Please enter amount for transfer:\n"))
                 bank.transfer_funds(src_account_number,dest_account_number,amount)
+            elif choice == "7":
+                customer_name = input("Please enter customer name to retrieve all details:\n")
+                flag = bank.find_customer(customer_name)
+                if flag:
+                    bank.view_all_accounts()
+                    bank.customer_transaction_history(customer_name)
+                else:
+                    print("Customer not found!")    
             elif choice == "8":
                 print("Exiting menu")
                 break
@@ -345,8 +353,7 @@ def bank_menu():
             print("Please enter a valid age.")
             
 bank_menu()  
-           
-           
+
             
             
             
