@@ -1,5 +1,4 @@
 # # Task: Enhanced Banking System Simulation
-
 # Create a Customer Class:
 # Attributes: (done)
         # name: The name of the customer (string).
@@ -182,7 +181,7 @@ class Bank():
             print(f"{customer.name}")
         return self.customers
    
-    def find_customer(self,name):
+    def find_customer(self, name):
         for customer in self.customers:
             if customer.name == name:
                 print(f"Customer {name} found!")
@@ -280,76 +279,44 @@ class Bank():
                 return
         print("This customer does not exist")
                 
-    def close_account(self, account_number):
+    def close_account(self, account_number): # chatgpt help 
         for customer in self.customers:
-            for index, account in enumerate(customer.accounts):  # Use enumerate to track index
+            for index, account in enumerate(customer.accounts): 
                 if account_number == account['account_number']:
-                    customer.accounts.pop(index)  # Use the index to pop
+                    customer.accounts.pop(index) 
                     print(f"Account {account_number} has been closed.")
-                    return customer.accounts  # Return the updated accounts list
-        print(f"Account {account_number} not found.")  # Notify if account doesn't exist
-                        
-       
-# Step 1: Create Bank object
-my_bank = Bank()
+                    return customer.accounts 
+        print(f"Account {account_number} not found.") 
 
-# Step 2: Create Customer objects
-customer1 = Customer(name="Alice", age=30)
-customer2 = Customer(name="Bob", age=45)
-customer3 = Customer(name="Charlie", age=25)
+def bank_menu():
+    bank = Bank()
+    while True:
+       print("\n--- Bank Menu ---")
+       print("1. Add a New Customer")
+       print("2. Show All Customers")
+       print("3. Exit")
+ 
+       choice = input("Enter your choice (1-3): ")
+       try:
+        if choice == "1":
+            customer_name = input("Please enter customer name: \n")
+            customer_age= int(input("Please enter customer age: \n"))
+            if customer_age < 18:
+                print("Customer age should be at least 18 years old")
+            else:
+                customer = Customer(customer_name, customer_age)
+                bank.add_customer(customer)
+       except:
+           print("Please enter valid age")
+           
+      
 
-# Step 3: Add customers to the bank
-my_bank.add_customer(customer1)
-my_bank.add_customer(customer2)
-my_bank.add_customer(customer3)
-
-# Step 4: Add accounts to the customers
-customer1.add_account(account_number="A001", balance=1000)  # Alice's account
-customer2.add_account(account_number="B001", balance=500)   # Bob's account
-customer3.add_account(account_number="C001", balance=200)   # Charlie's account
-customer3.add_account(account_number="C002", balance=200) # Charlie's account
-
-# Step 5: Deposit funds into accounts
-customer1.deposit("A001", 200)  # Valid deposit for Alice
-customer2.deposit("B001", -50)  # Invalid deposit for Bob (negative amount)
-customer3.deposit("C001", 100)  # Valid deposit for Charlie
-
-# Step 6: Withdraw funds from accounts
-customer1.withdraw("A001", 500)  # Valid withdrawal for Alice
-customer2.withdraw("B001", 1000) # Invalid withdrawal for Bob (insufficient funds)
-customer3.withdraw("C001", 50)   # Valid withdrawal for Charlie
-
-# Step 7: Transfer funds between accounts (within the same customer)
-# This step should happen between accounts that belong to the same customer.
-# Since customer1 only has one account, you can skip testing this feature for now.
-
-# Step 8: View all accounts in the bank
-# my_bank.view_all_accounts()
-
-# Step 9: Remove a customer
-# my_bank.remove_customer("XX")   # Remove Bob from the bank
-# my_bank.remove_customer("Dave")  # Attempt to remove a non-existing customer (Dave)
-
-# Step 10: View remaining customers
-# my_bank.show_customers()
-
-# my_bank.check_account_balance('S001')
-
-# my_bank.check_account_balance("A001")  # Should display the balance for Alice's account
-# my_bank.check_account_balance("B001")  # Should display the balance for Bob's account
-# my_bank.check_account_balance("Z999")  # Should print "Account number not found!"
-
-# my_bank.customer_transaction_history("X")
-# my_bank.update_customer_information("Bob","Zeynal",19)
-my_bank.close_account("C002")
-        
-
-
-
-
-
-
-
-
+bank_menu()      
+           
+           
+            
+            
+            
+   
 
 
