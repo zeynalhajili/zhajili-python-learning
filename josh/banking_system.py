@@ -28,7 +28,8 @@
         # Update Customer Information: A method to update a customer’s name or age.
         # Close Account: A method to close a specific account (by account number) for a customer.
         # Change Account Balance Directly: Implement a method to adjust an account balance directly (for testing purposes).
-        
+ 
+# project phase1       
 # User Interaction:
 # Implement a menu-driven interface that allows users to:
     # Add a new customer.
@@ -40,19 +41,20 @@
     # Exit the program.
 # Use a loop to display the menu repeatedly until the user chooses to exit.
 
+# project phase2
 # Transaction Records:
 # Each transaction (deposit, withdrawal, and transfer) should be recorded in the transaction_history attribute of the Customer class. The transaction record should include:
     # Date and time of the transaction.
     # Type of transaction (Deposit, Withdrawal, Transfer).
     # Amount involved.
     # Account number.
-    
+# project phase3   
 # Data Validation:
 # Ensure that:
     # The account number is unique when adding a new account.
     # A withdrawal cannot exceed the available balance.
     # Fund transfers cannot occur between accounts of different customers directly, but customers can transfer between their own accounts.
-    
+ # project phase4   
 # Additional Features to Consider:
     # Implement error handling for invalid inputs (e.g., non-numeric input for deposits/withdrawals).
     # Allow customers to have multiple accounts with different balances.
