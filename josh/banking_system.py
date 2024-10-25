@@ -291,26 +291,33 @@ class Bank():
 def bank_menu():
     bank = Bank()
     while True:
-       print("\n--- Bank Menu ---")
-       print("1. Add a New Customer")
-       print("2. Show All Customers")
-       print("3. Exit")
- 
-       choice = input("Enter your choice (1-3): ")
-       try:
-        if choice == "1":
-            customer_name = input("Please enter customer name: \n")
-            customer_age= int(input("Please enter customer age: \n"))
-            if customer_age < 18:
-                print("Customer age should be at least 18 years old")
+        print("\n--- Bank Menu ---")
+        print("1. Add a New Customer")
+        print("2. Show All Customers")
+        print("3. Exit")
+
+        choice = input("Enter your choice (1-3): ")
+        try:
+            if choice == "1":
+                customer_name = input("Please enter customer name: \n")
+                customer_age = int(input("Please enter customer age: \n"))
+                if customer_age < 18:
+                    print("Customer age should be at least 18 years old")
+                else:
+                    customer = Customer(customer_name, customer_age)
+                    bank.add_customer(customer)
+            elif choice == "2":
+                print("Following customers are found in our bank\n")
+                bank.show_customers()
+            elif choice == "3":
+                print("Exiting menu")
+                break
             else:
-                customer = Customer(customer_name, customer_age)
-                bank.add_customer(customer)
-       except:
-           print("Please enter valid age")
+                print("Invalid choice. Please select a valid option.")
+        except ValueError:
+            print("Please enter a valid age.")
            
       
-
 bank_menu()      
            
            
