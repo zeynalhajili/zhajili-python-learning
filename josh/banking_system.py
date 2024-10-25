@@ -296,9 +296,12 @@ def bank_menu():
         print("2. Show All Customers")
         print("3. Add New Account to Existing Customer")
         print("4. Deposit funds to account")
-        print("5. Exit")
+        print("5. Withdraw funds from account")
+        print("6. Transfer funds between accounts")
+        print("7. View customer details")
+        print("8. Exit")
 
-        choice = input("Enter your choice (1-4): ")
+        choice = input("Enter your choice (1-8): ")
         try:
             if choice == "1":
                 customer_name = input("Please enter customer name: \n")
@@ -309,7 +312,7 @@ def bank_menu():
                     customer = Customer(customer_name, customer_age)
                     bank.add_customer(customer)
             elif choice == "2":
-                print("Following customers are found in our bank\n")
+                print("Following customers are found in our bank:\n")
                 bank.show_customers()
             elif choice == "3":
                 customer_name = input("Please enter existing customer name:\n")
@@ -325,14 +328,22 @@ def bank_menu():
                 amount = int(input("Please enter deposit amount:\n"))
                 customer.deposit(account_number,amount)
             elif choice == "5":
+                account_number = input("Please enter account number for withdraw:\n")
+                amount = int(input("Please enter withdraw amount:\n"))
+                customer.withdraw(account_number,amount)
+            elif choice == "6":
+                src_account_number = input("Please enter source account for transfer:\n")
+                dest_account_number = input("Please enter destination account for transfer:\n")
+                amount = int(input("Please enter amount for transfer:\n"))
+                bank.transfer_funds(src_account_number,dest_account_number,amount)
+            elif choice == "8":
                 print("Exiting menu")
                 break
             else:
                 print("Invalid choice. Please select a valid option.")
         except ValueError:
             print("Please enter a valid age.")
-           
-      
+            
 bank_menu()  
            
            
