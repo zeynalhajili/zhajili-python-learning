@@ -137,7 +137,7 @@ class Customer():
                     print(f"{account_number}'s balance has been decreased by {amount}$. New balance is {account['balance']}$")
                     return self.accounts
                 else:
-                    print("You dont have enough balance!")
+                    print("You don't have enough balance!")
                     # add transcation history  for insufficient balance
                     transaction = {
                     "account_number": account_number,
@@ -294,15 +294,17 @@ def bank_menu():
         print("\n--- Bank Menu ---")
         print("1. Add a New Customer")
         print("2. Show All Customers")
-        print("3. Exit")
+        print("3. Add New Account to Existing Customer")
+        print("4. Deposit funds to account")
+        print("5. Exit")
 
-        choice = input("Enter your choice (1-3): ")
+        choice = input("Enter your choice (1-4): ")
         try:
             if choice == "1":
                 customer_name = input("Please enter customer name: \n")
                 customer_age = int(input("Please enter customer age: \n"))
                 if customer_age < 18:
-                    print("Customer age should be at least 18 years old")
+                    print("Customer age should be at least 18 years old!")
                 else:
                     customer = Customer(customer_name, customer_age)
                     bank.add_customer(customer)
@@ -310,6 +312,19 @@ def bank_menu():
                 print("Following customers are found in our bank\n")
                 bank.show_customers()
             elif choice == "3":
+                customer_name = input("Please enter existing customer name:\n")
+                flag = bank.find_customer(customer_name)
+                if flag:
+                    print(f"Adding account {customer_name}\n")
+                    account_id = input("Please enter custom account id:\n")
+                    initial_amount = int(input("Please enter amount you want to add to account:\n"))
+                    customer.add_account(account_id,initial_amount)
+                    print(f"Account {account_id} has been topped up by {initial_amount} $")
+            elif choice == "4":
+                account_number = input("Please enter account number for deposit:\n")
+                amount = int(input("Please enter deposit amount:\n"))
+                customer.deposit(account_number,amount)
+            elif choice == "5":
                 print("Exiting menu")
                 break
             else:
@@ -318,7 +333,7 @@ def bank_menu():
             print("Please enter a valid age.")
            
       
-bank_menu()      
+bank_menu()  
            
            
             
