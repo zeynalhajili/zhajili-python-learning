@@ -314,11 +314,11 @@ def bank_menu():
                     customer = Customer(customer_name, customer_age)
                     bank.add_customer(customer)
             elif choice == "2":
-                if len(bank.customers) != 0:
+                if bank.customers:
                     print("Following customers are found in our bank:\n")
+                    bank.show_customers()
                 else:
                     print("No customer is found in bank!")
-                bank.show_customers()
             elif choice == "3":
                 customer_name = input("Please enter existing customer name:\n")
                 flag = bank.find_customer(customer_name)
