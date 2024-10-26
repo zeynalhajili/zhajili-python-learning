@@ -303,7 +303,7 @@ def bank_menu():
         print("7. View customer details")
         print("8. Exit")
 
-        choice = input("Enter your choice (1-8): ")
+        choice = input("Enter your choice (1-8):")
         try:
             if choice == "1":
                 customer_name = input("Please enter customer name: \n")
@@ -314,7 +314,10 @@ def bank_menu():
                     customer = Customer(customer_name, customer_age)
                     bank.add_customer(customer)
             elif choice == "2":
-                print("Following customers are found in our bank:\n")
+                if len(bank.customers) != 0:
+                    print("Following customers are found in our bank:\n")
+                else:
+                    print("No customer is found in bank!")
                 bank.show_customers()
             elif choice == "3":
                 customer_name = input("Please enter existing customer name:\n")
